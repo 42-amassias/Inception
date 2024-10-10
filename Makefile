@@ -1,10 +1,11 @@
-NAME=inception
-COMPOSE=srcs/docker-compose.yml
+NAME		:=	inception
+COMPOSE		:=	./srcs/docker-compose.yml
+DATA_DIR	:=	/home/amassias/data
 
 all: $(NAME)
 
 $(NAME):
-	@mkdir -p ./srcs/data/wordpress ./srcs/data/mysql
+	@mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mysql
 	@docker-compose -f $(COMPOSE) build --parallel
 	@docker-compose -f $(COMPOSE) up -d --build
 
@@ -16,7 +17,7 @@ clean:
 
 fclean: clean
 	@docker system prune --force --volumes --all
-	@rm -rf ./srcs/data
+	@sudo rm -rf $(DATA_DIR)
 
 re: down all
 
